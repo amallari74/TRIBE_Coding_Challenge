@@ -17,15 +17,19 @@ except OSError as error:
    print("Can't open order file: ", error)
 
 else:
-  col_ctr = init_counters()
   list_img_format = ['IMG', 'img', 'Img']
   list_flac_format = ['FLAC', 'flac', 'Flac']
   list_vid_format = ['VID', 'vid', 'Vid']
 
-  line = order_handle.readline()   
+  hndle = order_handle.__iter__()
+  line = [line for line in hndle]
+  num_line = len(line) 
+  line_ctr = 0 
 
-  while line: 
-    data = line.split(" ")
+  while line_ctr < num_line - 2:    
+    data = line[line_ctr].split(" ") 
+    print("data: ", data)
+    col_ctr = init_counters()
 
     try:
      if list_img_format.count(data[col_ctr]) > 0:
@@ -106,7 +110,8 @@ else:
     except:
         pass
 
-  
+    line_ctr+=1  
+
   order_handle.close()  
 
 
